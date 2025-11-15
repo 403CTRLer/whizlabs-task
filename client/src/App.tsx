@@ -87,7 +87,7 @@ function Navigation() {
         elevation={0}
         sx={{
           background: theme.palette.mode === "dark"
-            ? "linear-gradient(135deg, #27272A 0%, #18181B 100%)"
+            ? "linear-gradient(135deg, #1E1D23 0%, #000000 100%)"
             : "linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%)",
           borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
         }}

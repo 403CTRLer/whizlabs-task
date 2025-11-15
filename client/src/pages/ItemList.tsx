@@ -224,7 +224,7 @@ export default function ItemList({ onView, onEdit, onDelete, lowStockThreshold =
                     position: "relative",
                     border: isLowStock(item.quantity)
                       ? `2px solid ${theme.palette.error.main}`
-                      : `1px solid ${theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}`,
+                      : `1px solid ${theme.palette.mode === "dark" ? "#1A1A1A" : "#e2e8f0"}`,
                     transition: "all 0.2s ease",
                     "&:hover": {
                       transform: "translateY(-4px)",

@@ -44,10 +44,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     palette: {
       mode,
       primary: {
-        main: mode === "light" ? "#3182ce" : "#3B82F6",
-        light: mode === "light" ? "#5a9bd4" : "#60a5fa",
-        dark: mode === "light" ? "#2c5aa0" : "#2563EB",
-        contrastText: mode === "light" ? "#ffffff" : "#ffffff",
+        main: mode === "light" ? "#3182ce" : "#D4AF37",
+        light: mode === "light" ? "#5a9bd4" : "#E5C158",
+        dark: mode === "light" ? "#2c5aa0" : "#B8941F",
+        contrastText: mode === "light" ? "#ffffff" : "#000000",
       },
       secondary: {
         main: mode === "light" ? "#805ad5" : "#a78bfa",
@@ -55,15 +55,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         dark: mode === "light" ? "#6b46c1" : "#8b5cf6",
       },
       background: {
-        default: mode === "light" ? "#f5f7fa" : "#18181B",
-        paper: mode === "light" ? "#ffffff" : "#27272A",
+        default: mode === "light" ? "#f5f7fa" : "#000000",
+        paper: mode === "light" ? "#ffffff" : "#1E1D23",
       },
       text: {
-        primary: mode === "light" ? "#1a202c" : "#E2E8F0",
-        secondary: mode === "light" ? "#718096" : "#A1A1AA",
-        disabled: mode === "light" ? "#a0aec0" : "#71717A",
+        primary: mode === "light" ? "#1a202c" : "#FFFFFF",
+        secondary: mode === "light" ? "#718096" : "#B3B3B3",
+        disabled: mode === "light" ? "#a0aec0" : "#666666",
       },
-      divider: mode === "light" ? "#e2e8f0" : "#3F3F46",
+      divider: mode === "light" ? "#e2e8f0" : "#1A1A1A",
       error: {
         main: mode === "light" ? "#e53e3e" : "#EF4444",
       },
@@ -79,14 +79,29 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     },
     typography: {
       fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+      h1: {
+        fontWeight: 700,
+        color: mode === "light" ? "#1a202c" : "#D4AF37",
+      },
+      h2: {
+        fontWeight: 700,
+        color: mode === "light" ? "#1a202c" : "#D4AF37",
+      },
+      h3: {
+        fontWeight: 700,
+        color: mode === "light" ? "#1a202c" : "#D4AF37",
+      },
       h4: {
         fontWeight: 700,
+        color: mode === "light" ? "#1a202c" : "#D4AF37",
       },
       h5: {
         fontWeight: 600,
+        color: mode === "light" ? "#1a202c" : "#D4AF37",
       },
       h6: {
         fontWeight: 600,
+        color: mode === "light" ? "#1a202c" : "#D4AF37",
       },
     },
     shape: {
@@ -100,7 +115,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
             boxShadow: mode === "light" 
               ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
               : "0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)",
-            border: `1px solid ${mode === "light" ? "#e2e8f0" : "#3F3F46"}`,
+            border: `1px solid ${mode === "light" ? "#e2e8f0" : "#1A1A1A"}`,
             transition: "all 0.2s ease",
             "&:hover": {
               boxShadow: mode === "light"
@@ -142,7 +157,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
               transition: "all 0.2s ease",
               "&:hover": {
                 "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: mode === "light" ? "#3182ce" : "#3B82F6",
+                  borderColor: mode === "light" ? "#3182ce" : "#D4AF37",
                 },
               },
               "&.Mui-focused": {
@@ -176,7 +191,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
             transition: "all 0.2s ease",
             "&:hover": {
               transform: "scale(1.1)",
-              backgroundColor: mode === "light" ? "rgba(49, 130, 206, 0.08)" : "rgba(59, 130, 246, 0.16)",
+              backgroundColor: mode === "light" ? "rgba(49, 130, 206, 0.08)" : "rgba(212, 175, 55, 0.16)",
             },
           },
         },
