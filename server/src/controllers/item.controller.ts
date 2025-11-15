@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ItemModel } from "../models/item.model";
 import { createItemSchema, updateItemSchema } from "../validators/item.validator";
 import { generateItemDescription } from "../services/ai.service";
+import { ApiResponse, PaginatedResponse, ApiError } from "../types/api.types";
 
 /**
  * GET /items
@@ -47,7 +48,7 @@ export const listItems = async (req: Request, res: Response) => {
     // Get total count for pagination metadata
     const total = await ItemModel.countDocuments(filter);
     
-    res.json({
+    const response: PaginatedResponse<any> = {
       data: items,
       meta: {
         total,
@@ -57,7 +58,8 @@ export const listItems = async (req: Request, res: Response) => {
         hasNextPage: pageNum < Math.ceil(total / limitNum),
         hasPrevPage: pageNum > 1,
       },
-    });
+    };
+    res.json(response);
   } catch (error) {
     throw error; // Let asyncHandler catch and process the error
   }
@@ -73,13 +75,15 @@ export const getItem = async (req: Request, res: Response) => {
     
     // Validate MongoDB ObjectId format
     if (!/^[0-9a-fA-F]{24}$/.test(id)) {
-      return res.status(400).json({ error: "Invalid item ID format" });
+      const errorResponse: ApiError = { error: "Invalid item ID format" };
+      return res.status(400).json(errorResponse);
     }
     
     const item = await ItemModel.findById(id);
     
     if (!item) {
-      return res.status(404).json({ error: "Item not found" });
+      const errorResponse: ApiError = { error: "Item not found" };
+      return res.status(404).json(errorResponse);
     }
     
     res.json(item);
@@ -99,26 +103,32 @@ export const createItem = async (req: Request, res: Response) => {
     const parsed = createItemSchema.safeParse(req.body);
     
     if (!parsed.success) {
-      return res.status(400).json({
+      const errorResponse: ApiError = {
         error: "Validation failed",
-        details: parsed.error.errors,
-      });
+        details: parsed.error.errors.map((e) => ({
+          path: e.path,
+          message: e.message,
+        })),
+      };
+      return res.status(400).json(errorResponse);
     }
     
     // Create the item in the database
     const newItem = await ItemModel.create(parsed.data);
     
     // Return the created item with 201 status
-    res.status(201).json({
+    const response: ApiResponse<any> = {
       message: "Item created successfully",
       data: newItem,
-    });
+    };
+    res.status(201).json(response);
   } catch (error: any) {
     // Handle duplicate key errors or other MongoDB errors
     if (error.code === 11000) {
-      return res.status(400).json({
+      const errorResponse: ApiError = {
         error: "Item with this name already exists",
-      });
+      };
+      return res.status(400).json(errorResponse);
     }
     throw error;
   }
@@ -135,17 +145,22 @@ export const updateItem = async (req: Request, res: Response) => {
     
     // Validate MongoDB ObjectId format
     if (!/^[0-9a-fA-F]{24}$/.test(id)) {
-      return res.status(400).json({ error: "Invalid item ID format" });
+      const errorResponse: ApiError = { error: "Invalid item ID format" };
+      return res.status(400).json(errorResponse);
     }
     
     // Validate request body against schema
     const parsed = updateItemSchema.safeParse(req.body);
     
     if (!parsed.success) {
-      return res.status(400).json({
+      const errorResponse: ApiError = {
         error: "Validation failed",
-        details: parsed.error.errors,
-      });
+        details: parsed.error.errors.map((e) => ({
+          path: e.path,
+          message: e.message,
+        })),
+      };
+      return res.status(400).json(errorResponse);
     }
     
     // Update the item
@@ -156,13 +171,15 @@ export const updateItem = async (req: Request, res: Response) => {
     );
     
     if (!updatedItem) {
-      return res.status(404).json({ error: "Item not found" });
+      const errorResponse: ApiError = { error: "Item not found" };
+      return res.status(404).json(errorResponse);
     }
     
-    res.json({
+    const response: ApiResponse<any> = {
       message: "Item updated successfully",
       data: updatedItem,
-    });
+    };
+    res.json(response);
   } catch (error) {
     throw error;
   }
@@ -178,13 +195,15 @@ export const deleteItem = async (req: Request, res: Response) => {
     
     // Validate MongoDB ObjectId format
     if (!/^[0-9a-fA-F]{24}$/.test(id)) {
-      return res.status(400).json({ error: "Invalid item ID format" });
+      const errorResponse: ApiError = { error: "Invalid item ID format" };
+      return res.status(400).json(errorResponse);
     }
     
     const deletedItem = await ItemModel.findByIdAndDelete(id);
     
     if (!deletedItem) {
-      return res.status(404).json({ error: "Item not found" });
+      const errorResponse: ApiError = { error: "Item not found" };
+      return res.status(404).json(errorResponse);
     }
     
     // Return 204 No Content on successful deletion
@@ -283,16 +302,18 @@ export const generateDescription = async (req: Request, res: Response) => {
     
     // Validate required fields
     if (!itemName || !category) {
-      return res.status(400).json({
+      const errorResponse: ApiError = {
         error: "itemName and category are required",
-      });
+      };
+      return res.status(400).json(errorResponse);
     }
     
     // Validate input format
     if (typeof itemName !== "string" || typeof category !== "string") {
-      return res.status(400).json({
+      const errorResponse: ApiError = {
         error: "itemName and category must be strings",
-      });
+      };
+      return res.status(400).json(errorResponse);
     }
     
     // Generate description using AI service

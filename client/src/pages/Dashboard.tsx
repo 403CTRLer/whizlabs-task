@@ -55,7 +55,7 @@ export default function Dashboard() {
   const getChartColors = () => {
     const isDark = theme.palette.mode === "dark";
     return isDark
-      ? ["#60a5fa", "#34d399", "#fbbf24", "#f87171", "#a78bfa", "#fb7185"]
+      ? ["#3B82F6", "#22C55E", "#F59E0B", "#EF4444", "#a78bfa", "#0EA5E9"]
       : ["#3182ce", "#38a169", "#d69e2e", "#e53e3e", "#805ad5", "#ed64a6"];
   };
 
@@ -133,9 +133,9 @@ export default function Dashboard() {
           <Card
             sx={{
               background: theme.palette.mode === "dark"
-                ? "linear-gradient(135deg, #1e293b 0%, #334155 100%)"
+                ? "linear-gradient(135deg, #27272A 0%, #3F3F46 100%)"
                 : "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-              border: `2px solid ${theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}`,
+              border: `2px solid ${theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}`,
             }}
           >
             <CardContent>
@@ -156,9 +156,9 @@ export default function Dashboard() {
           <Card
             sx={{
               background: theme.palette.mode === "dark"
-                ? "linear-gradient(135deg, #1e293b 0%, #334155 100%)"
+                ? "linear-gradient(135deg, #27272A 0%, #3F3F46 100%)"
                 : "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-              border: `2px solid ${theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}`,
+              border: `2px solid ${theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}`,
             }}
           >
             <CardContent>
@@ -179,9 +179,9 @@ export default function Dashboard() {
           <Card
             sx={{
               background: theme.palette.mode === "dark"
-                ? "linear-gradient(135deg, #1e293b 0%, #334155 100%)"
+                ? "linear-gradient(135deg, #27272A 0%, #3F3F46 100%)"
                 : "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-              border: `2px solid ${stats.lowStockCount > 0 ? theme.palette.error.main : (theme.palette.mode === "dark" ? "#334155" : "#e2e8f0")}`,
+              border: `2px solid ${stats.lowStockCount > 0 ? theme.palette.error.main : (theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0")}`,
             }}
           >
             <CardContent>
@@ -211,9 +211,9 @@ export default function Dashboard() {
           <Card
             sx={{
               background: theme.palette.mode === "dark"
-                ? "linear-gradient(135deg, #1e293b 0%, #334155 100%)"
+                ? "linear-gradient(135deg, #27272A 0%, #3F3F46 100%)"
                 : "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-              border: `2px solid ${theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}`,
+              border: `2px solid ${theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}`,
             }}
           >
             <CardContent>
@@ -258,8 +258,8 @@ export default function Dashboard() {
                     </Pie>
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: theme.palette.mode === "dark" ? "#1e293b" : "#ffffff",
-                        border: `1px solid ${theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}`,
+                        backgroundColor: theme.palette.mode === "dark" ? "#27272A" : "#ffffff",
+                        border: `1px solid ${theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}`,
                         borderRadius: "8px",
                       }}
                     />
@@ -286,21 +286,21 @@ export default function Dashboard() {
                   <BarChart data={barData}>
                     <CartesianGrid
                       strokeDasharray="3 3"
-                      stroke={theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}
+                      stroke={theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}
                     />
                     <XAxis
                       dataKey="name"
                       tick={{ fill: theme.palette.text.secondary }}
-                      stroke={theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}
+                      stroke={theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}
                     />
                     <YAxis
                       tick={{ fill: theme.palette.text.secondary }}
-                      stroke={theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}
+                      stroke={theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}
                     />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: theme.palette.mode === "dark" ? "#1e293b" : "#ffffff",
-                        border: `1px solid ${theme.palette.mode === "dark" ? "#334155" : "#e2e8f0"}`,
+                        backgroundColor: theme.palette.mode === "dark" ? "#27272A" : "#ffffff",
+                        border: `1px solid ${theme.palette.mode === "dark" ? "#3F3F46" : "#e2e8f0"}`,
                         borderRadius: "8px",
                       }}
                       formatter={(value) => `$${value.toLocaleString()}`}
@@ -340,7 +340,7 @@ export default function Dashboard() {
                           borderRadius: "8px",
                           mb: 0.5,
                           "&:hover": {
-                            backgroundColor: theme.palette.mode === "dark" ? "rgba(96, 165, 250, 0.1)" : "rgba(49, 130, 206, 0.08)",
+                            backgroundColor: theme.palette.mode === "dark" ? "rgba(59, 130, 246, 0.1)" : "rgba(49, 130, 206, 0.08)",
                           },
                         }}
                       >

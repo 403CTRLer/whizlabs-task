@@ -30,11 +30,13 @@ const ItemSchema = new Schema<IItem>(
       type: Number,
       required: [true, "Quantity is required"],
       min: [0, "Quantity cannot be negative"],
+      index: true, // Index for low stock queries
     },
     price: {
       type: Number,
       required: [true, "Price is required"],
       min: [0, "Price cannot be negative"],
+      index: true, // Index for price-based queries
     },
     description: {
       type: String,

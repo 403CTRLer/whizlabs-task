@@ -44,10 +44,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     palette: {
       mode,
       primary: {
-        main: mode === "light" ? "#3182ce" : "#60a5fa",
-        light: mode === "light" ? "#5a9bd4" : "#93c5fd",
-        dark: mode === "light" ? "#2c5aa0" : "#3b82f6",
-        contrastText: mode === "light" ? "#ffffff" : "#0f172a",
+        main: mode === "light" ? "#3182ce" : "#3B82F6",
+        light: mode === "light" ? "#5a9bd4" : "#60a5fa",
+        dark: mode === "light" ? "#2c5aa0" : "#2563EB",
+        contrastText: mode === "light" ? "#ffffff" : "#ffffff",
       },
       secondary: {
         main: mode === "light" ? "#805ad5" : "#a78bfa",
@@ -55,21 +55,26 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         dark: mode === "light" ? "#6b46c1" : "#8b5cf6",
       },
       background: {
-        default: mode === "light" ? "#f5f7fa" : "#0f172a",
-        paper: mode === "light" ? "#ffffff" : "#1e293b",
+        default: mode === "light" ? "#f5f7fa" : "#18181B",
+        paper: mode === "light" ? "#ffffff" : "#27272A",
       },
       text: {
-        primary: mode === "light" ? "#1a202c" : "#f1f5f9",
-        secondary: mode === "light" ? "#718096" : "#94a3b8",
+        primary: mode === "light" ? "#1a202c" : "#E2E8F0",
+        secondary: mode === "light" ? "#718096" : "#A1A1AA",
+        disabled: mode === "light" ? "#a0aec0" : "#71717A",
       },
+      divider: mode === "light" ? "#e2e8f0" : "#3F3F46",
       error: {
-        main: mode === "light" ? "#e53e3e" : "#f87171",
+        main: mode === "light" ? "#e53e3e" : "#EF4444",
       },
       warning: {
-        main: mode === "light" ? "#d69e2e" : "#fbbf24",
+        main: mode === "light" ? "#d69e2e" : "#F59E0B",
       },
       success: {
-        main: mode === "light" ? "#38a169" : "#34d399",
+        main: mode === "light" ? "#38a169" : "#22C55E",
+      },
+      info: {
+        main: mode === "light" ? "#3182ce" : "#0EA5E9",
       },
     },
     typography: {
@@ -95,7 +100,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
             boxShadow: mode === "light" 
               ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
               : "0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)",
-            border: `1px solid ${mode === "light" ? "#e2e8f0" : "#334155"}`,
+            border: `1px solid ${mode === "light" ? "#e2e8f0" : "#3F3F46"}`,
             transition: "all 0.2s ease",
             "&:hover": {
               boxShadow: mode === "light"
@@ -137,7 +142,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
               transition: "all 0.2s ease",
               "&:hover": {
                 "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: mode === "light" ? "#3182ce" : "#60a5fa",
+                  borderColor: mode === "light" ? "#3182ce" : "#3B82F6",
                 },
               },
               "&.Mui-focused": {
@@ -171,7 +176,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
             transition: "all 0.2s ease",
             "&:hover": {
               transform: "scale(1.1)",
-              backgroundColor: mode === "light" ? "rgba(49, 130, 206, 0.08)" : "rgba(96, 165, 250, 0.16)",
+              backgroundColor: mode === "light" ? "rgba(49, 130, 206, 0.08)" : "rgba(59, 130, 246, 0.16)",
             },
           },
         },

@@ -44,4 +44,19 @@ export const api = {
       method: "POST", 
       body: JSON.stringify({ itemName, category }) 
     }),
+  
+  // Product CRUD operations
+  listProducts: (q?: string, tag?: string, page?: number, limit?: number) => {
+    const params = new URLSearchParams();
+    if (q) params.append("q", q);
+    if (tag) params.append("tag", tag);
+    if (page) params.append("page", String(page));
+    if (limit) params.append("limit", String(limit));
+    const query = params.toString();
+    return request(`/products${query ? `?${query}` : ""}`);
+  },
+  getProduct: (id: string) => request(`/products/${id}`),
+  createProduct: (data: any) => request(`/products`, { method: "POST", body: JSON.stringify(data) }),
+  updateProduct: (id: string, data: any) => request(`/products/${id}`, { method: "PUT", body: JSON.stringify(data) }),
+  deleteProduct: (id: string) => fetch(`${API_BASE}/products/${id}`, { method: "DELETE" }),
 };

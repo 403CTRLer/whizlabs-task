@@ -22,6 +22,7 @@ import ItemList from "./pages/ItemList";
 import ItemForm from "./pages/ItemForm";
 import ItemView from "./pages/ItemView";
 import Dashboard from "./pages/Dashboard";
+import Instructions from "./pages/Instructions";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { ThemeProvider, useTheme as useCustomTheme } from "./contexts/ThemeContext";
 
@@ -56,11 +57,25 @@ function Navigation() {
   const theme = useTheme();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     navigate(newValue);
     setSelectedId(null);
     setEditingId(null);
+  };
+
+  const handleItemSaved = () => {
+    setEditingId(null);
+    setSelectedId(null);
+    // Trigger refresh of ItemList by updating key
+    setRefreshKey((prev) => prev + 1);
+  };
+
+  const handleItemDeleted = () => {
+    setSelectedId(null);
+    // Trigger refresh of ItemList by updating key
+    setRefreshKey((prev) => prev + 1);
   };
 
   const currentPath = location.pathname;
@@ -72,7 +87,7 @@ function Navigation() {
         elevation={0}
         sx={{
           background: theme.palette.mode === "dark"
-            ? "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)"
+            ? "linear-gradient(135deg, #27272A 0%, #18181B 100%)"
             : "linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%)",
           borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
         }}
@@ -142,9 +157,13 @@ function Navigation() {
             path="/inventory"
             element={
               <Box>
+                {/* User Instructions */}
+                <Instructions />
+                
                 <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 400px" }, gap: 3 }}>
                   <Box>
                     <ItemList
+                      key={refreshKey}
                       onView={(id) => {
                         setSelectedId(id);
                         setEditingId(null);
@@ -153,16 +172,13 @@ function Navigation() {
                         setEditingId(id);
                         setSelectedId(null);
                       }}
+                      onDelete={handleItemDeleted}
                     />
                   </Box>
                   <Box>
                     <ItemForm
                       id={editingId ?? undefined}
-                      onSaved={() => {
-                        setEditingId(null);
-                        // Refresh the page to update the list
-                        window.location.reload();
-                      }}
+                      onSaved={handleItemSaved}
                     />
                     {selectedId && (
                       <Box sx={{ mt: 3 }}>
