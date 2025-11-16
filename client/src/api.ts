@@ -1,3 +1,5 @@
+import { auth } from "./services/auth";
+
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000/api";
 
 /**
@@ -5,10 +7,26 @@ const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000/api";
  * Handles all HTTP requests to the back-end API
  */
 async function request(path: string, opts: RequestInit = {}) {
+  const token = auth.getToken();
+  const headers: HeadersInit = { "Content-Type": "application/json" };
+  
+  // Add Authorization header if token exists
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { "Content-Type": "application/json" },
+    headers,
     ...opts
   });
+  
+  // Handle 401 - clear token and show message
+  if (res.status === 401) {
+    auth.logout();
+    alert("Session expired — please login again");
+    throw new Error("Unauthorized");
+  }
+  
   if (!res.ok) {
     const payload = await res.json().catch(() => ({}));
     throw new Error(payload?.error || res.statusText);
@@ -30,7 +48,24 @@ export const api = {
   getItem: (id: string) => request(`/items/${id}`),
   createItem: (data: any) => request(`/items`, { method: "POST", body: JSON.stringify(data) }),
   updateItem: (id: string, data: any) => request(`/items/${id}`, { method: "PUT", body: JSON.stringify(data) }),
-  deleteItem: (id: string) => fetch(`${API_BASE}/items/${id}`, { method: "DELETE" }),
+  deleteItem: async (id: string) => {
+    const token = auth.getToken();
+    const headers: HeadersInit = {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    const res = await fetch(`${API_BASE}/items/${id}`, { method: "DELETE", headers });
+    if (res.status === 401) {
+      auth.logout();
+      alert("Session expired — please login again");
+      throw new Error("Unauthorized");
+    }
+    if (!res.ok) {
+      const payload = await res.json().catch(() => ({}));
+      throw new Error(payload?.error || res.statusText);
+    }
+    return res.status === 204 ? null : res.json().catch(() => null);
+  },
   
   // Analytics
   getStats: () => request(`/items/stats`),
@@ -58,5 +93,22 @@ export const api = {
   getProduct: (id: string) => request(`/products/${id}`),
   createProduct: (data: any) => request(`/products`, { method: "POST", body: JSON.stringify(data) }),
   updateProduct: (id: string, data: any) => request(`/products/${id}`, { method: "PUT", body: JSON.stringify(data) }),
-  deleteProduct: (id: string) => fetch(`${API_BASE}/products/${id}`, { method: "DELETE" }),
+  deleteProduct: async (id: string) => {
+    const token = auth.getToken();
+    const headers: HeadersInit = {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    const res = await fetch(`${API_BASE}/products/${id}`, { method: "DELETE", headers });
+    if (res.status === 401) {
+      auth.logout();
+      alert("Session expired — please login again");
+      throw new Error("Unauthorized");
+    }
+    if (!res.ok) {
+      const payload = await res.json().catch(() => ({}));
+      throw new Error(payload?.error || res.statusText);
+    }
+    return res.status === 204 ? null : res.json().catch(() => null);
+  },
 };

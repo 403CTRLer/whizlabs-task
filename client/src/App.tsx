@@ -23,6 +23,7 @@ import ItemForm from "./pages/ItemForm";
 import ItemView from "./pages/ItemView";
 import Dashboard from "./pages/Dashboard";
 import Instructions from "./pages/Instructions";
+import LoginForm from "./components/LoginForm";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { ThemeProvider, useTheme as useCustomTheme } from "./contexts/ThemeContext";
 
@@ -176,10 +177,13 @@ function Navigation() {
                     />
                   </Box>
                   <Box>
-                    <ItemForm
-                      id={editingId ?? undefined}
-                      onSaved={handleItemSaved}
-                    />
+                    <LoginForm />
+                    <Box sx={{ mt: 3 }}>
+                      <ItemForm
+                        id={editingId ?? undefined}
+                        onSaved={handleItemSaved}
+                      />
+                    </Box>
                     {selectedId && (
                       <Box sx={{ mt: 3 }}>
                         <ItemView id={selectedId} />

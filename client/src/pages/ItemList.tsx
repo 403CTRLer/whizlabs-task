@@ -31,6 +31,7 @@ import {
 } from "@mui/icons-material";
 import { api } from "../api";
 import { useNotification } from "../contexts/NotificationContext";
+import { auth } from "../services/auth";
 
 interface Item {
   _id: string;
@@ -334,37 +335,43 @@ export default function ItemList({ onView, onEdit, onDelete, lowStockThreshold =
                           <ViewIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit Item">
-                        <IconButton
-                          size="small"
-                          color="secondary"
-                          onClick={() => onEdit(item._id)}
-                          aria-label="edit"
-                          sx={{
-                            backgroundColor: alpha(theme.palette.secondary.main, 0.1),
-                            "&:hover": {
-                              backgroundColor: alpha(theme.palette.secondary.main, 0.2),
-                            },
-                          }}
-                        >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
+                      <Tooltip title={!auth.getToken() ? "Login required" : "Edit Item"}>
+                        <span>
+                          <IconButton
+                            size="small"
+                            color="secondary"
+                            onClick={() => onEdit(item._id)}
+                            aria-label="edit"
+                            disabled={!auth.getToken()}
+                            sx={{
+                              backgroundColor: alpha(theme.palette.secondary.main, 0.1),
+                              "&:hover": {
+                                backgroundColor: alpha(theme.palette.secondary.main, 0.2),
+                              },
+                            }}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </span>
                       </Tooltip>
-                      <Tooltip title="Delete Item">
-                        <IconButton
-                          size="small"
-                          color="error"
-                          onClick={() => handleDelete(item._id)}
-                          aria-label="delete"
-                          sx={{
-                            backgroundColor: alpha(theme.palette.error.main, 0.1),
-                            "&:hover": {
-                              backgroundColor: alpha(theme.palette.error.main, 0.2),
-                            },
-                          }}
-                        >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
+                      <Tooltip title={!auth.getToken() ? "Login required" : "Delete Item"}>
+                        <span>
+                          <IconButton
+                            size="small"
+                            color="error"
+                            onClick={() => handleDelete(item._id)}
+                            aria-label="delete"
+                            disabled={!auth.getToken()}
+                            sx={{
+                              backgroundColor: alpha(theme.palette.error.main, 0.1),
+                              "&:hover": {
+                                backgroundColor: alpha(theme.palette.error.main, 0.2),
+                              },
+                            }}
+                          >
+                            <DeleteIcon fontSize="small" />
+                          </IconButton>
+                        </span>
                       </Tooltip>
                     </Box>
                   </CardContent>

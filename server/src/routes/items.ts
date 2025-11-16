@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as itemController from "../controllers/item.controller";
 import asyncHandler from "../middlewares/asyncHandler";
+import { requireAuth } from "../middlewares/auth.middleware";
 
 /**
  * Items Router
@@ -23,14 +24,14 @@ router.get("/", asyncHandler(itemController.listItems));
 // GET /items/:id - Retrieve a single item by ID
 router.get("/:id", asyncHandler(itemController.getItem));
 
-// POST /items - Create a new item
-router.post("/", asyncHandler(itemController.createItem));
+// POST /items - Create a new item (protected)
+router.post("/", requireAuth(), asyncHandler(itemController.createItem));
 
-// PUT /items/:id - Update an existing item
-router.put("/:id", asyncHandler(itemController.updateItem));
+// PUT /items/:id - Update an existing item (protected)
+router.put("/:id", requireAuth(), asyncHandler(itemController.updateItem));
 
-// DELETE /items/:id - Delete an item
-router.delete("/:id", asyncHandler(itemController.deleteItem));
+// DELETE /items/:id - Delete an item (protected)
+router.delete("/:id", requireAuth(), asyncHandler(itemController.deleteItem));
 
 export default router;
 

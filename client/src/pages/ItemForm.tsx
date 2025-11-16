@@ -13,10 +13,12 @@ import {
   alpha,
   Tooltip,
   Divider,
+  Alert,
 } from "@mui/material";
 import { AutoAwesome as AIIcon, Save as SaveIcon } from "@mui/icons-material";
 import { api } from "../api";
 import { useNotification } from "../contexts/NotificationContext";
+import { auth } from "../services/auth";
 
 interface ItemFormData {
   itemName: string;
@@ -325,11 +327,16 @@ export default function ItemForm({ id, onSaved }: Props) {
 
           <Divider sx={{ my: 3 }} />
 
+          {!auth.getToken() && (
+            <Alert severity="info" sx={{ mb: 2 }}>
+              Login required
+            </Alert>
+          )}
           <Box sx={{ display: "flex", gap: 2 }}>
             <Button
               type="submit"
               variant="contained"
-              disabled={loading}
+              disabled={loading || !auth.getToken()}
               startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
               sx={{
                 flexGrow: 1,
